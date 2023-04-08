@@ -34,14 +34,14 @@ export const getTrains =
   async (dispatch) => {
     try {
       dispatch({ type: ALL_TRAINS_REQUEST });
-      let link = `/api/v1/trains?page=${currentPage}`;
+      let link = `https://orange-snail-tutu.cyclic.app/api/v1/trains?page=${currentPage}`;
       console.log("page received by action is" + currentPage);
 
       if (destination !== "" && startingCity !== "") {
-        link = `/api/v1/trains?startingCity=${startingCity}&destination=${destination}&departureDay=${date}&page=${currentPage}&pricePerSeat[gte]=${price[0]}&pricePerSeat[lte]=${price[1]}&category=${category}`;
+        link = `https://orange-snail-tutu.cyclic.app/api/v1/trains?startingCity=${startingCity}&destination=${destination}&departureDay=${date}&page=${currentPage}&pricePerSeat[gte]=${price[0]}&pricePerSeat[lte]=${price[1]}&category=${category}`;
       }
       if (destination !== "" && startingCity == "") {
-        link = `/api/v1/trains?destination=${destination}`;
+        link = `https://orange-snail-tutu.cyclic.app/api/v1/trains?destination=${destination}`;
       }
       const { data } = await axios.get(link);
       console.log(data);
@@ -57,7 +57,9 @@ export const getTrains =
 export const getAdminTrains = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_TRAIN_REQUEST });
-    const { data } = await axios.get("/api/v1/admin/trains");
+    const { data } = await axios.get(
+      "https://orange-snail-tutu.cyclic.app/api/v1/admin/trains"
+    );
 
     dispatch({
       type: ADMIN_TRAIN_SUCCESS,
@@ -78,7 +80,11 @@ export const createTrain = (trainData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.post(`/api/v1/trains/new`, trainData, config);
+    const { data } = await axios.post(
+      `https://orange-snail-tutu.cyclic.app/api/v1/trains/new`,
+      trainData,
+      config
+    );
     console.log(data);
     dispatch({
       type: NEW_TRAIN_SUCCESS,
@@ -99,7 +105,12 @@ export const updateTrain = (id, trainData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.put(`/api/v1/train/${id}`, trainData, config);
+    const { data } = await axios.put(
+      // `https://crowded-crow-cloak.cyclic.app/api/v1/train/${id}`,
+      `https://orange-snail-tutu.cyclic.app/api/v1/train/${id}`,
+      trainData,
+      config
+    );
     console.log(data);
     dispatch({
       type: UPDATE_TRAIN_SUCCESS,
@@ -116,7 +127,9 @@ export const getTrain = (id) => async (dispatch) => {
   try {
     dispatch({ type: TRAIN_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/trains/${id}`);
+    const { data } = await axios.get(
+      `https://orange-snail-tutu.cyclic.app/api/v1/trains/${id}`
+    );
     dispatch({ type: TRAIN_DETAILS_SUCCESS, payload: data.train });
   } catch (error) {
     dispatch({
@@ -128,7 +141,9 @@ export const getTrain = (id) => async (dispatch) => {
 export const deletingTrain = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_TRAIN_REQUEST });
-    const { data } = await axios.delete(`/api/v1/train/${id}`);
+    const { data } = await axios.delete(
+      `https://orange-snail-tutu.cyclic.app/api/v1/train/${id}`
+    );
     console.log(data);
     dispatch({ type: DELETE_TRAIN_SUCCESS, payload: data.success });
   } catch (error) {
@@ -141,7 +156,9 @@ export const deletingTrain = (id) => async (dispatch) => {
 
 export const addTrainForBooking =
   (id, numberOfSeats) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/v1/trains/${id}`);
+    const { data } = await axios.get(
+      `https://orange-snail-tutu.cyclic.app/api/v1/trains/${id}`
+    );
 
     dispatch({
       type: ADD_TO_BOOKING,

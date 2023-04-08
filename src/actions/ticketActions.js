@@ -27,7 +27,11 @@ export const createTicket = (ticket) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post("/api/v1/ticket/new", ticket, config);
+    const { data } = await axios.post(
+      "https://orange-snail-tutu.cyclic.app/api/v1/ticket/new",
+      ticket,
+      config
+    );
 
     dispatch({ type: CREATE_TICKET_SUCCESS, payload: data });
   } catch (error) {
@@ -42,7 +46,9 @@ export const myTickets = () => async (dispatch) => {
   try {
     dispatch({ type: MY_TICKET_REQUEST });
 
-    const { data } = await axios.get("/api/v1/ticket/my");
+    const { data } = await axios.get(
+      "https://orange-snail-tutu.cyclic.app/api/v1/ticket/my"
+    );
 
     dispatch({ type: MY_TICKET_SUCCESS, payload: data });
   } catch (error) {
@@ -58,7 +64,9 @@ export const getAllTickets = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_TICKET_REQUEST });
 
-    const { data } = await axios.get("/api/v1/tickets/all");
+    const { data } = await axios.get(
+      "https://orange-snail-tutu.cyclic.app/api/v1/tickets/all"
+    );
 
     dispatch({ type: ALL_TICKET_SUCCESS, payload: data.tickets });
   } catch (error) {
@@ -73,7 +81,9 @@ export const getTicketDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: TICKET_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/ticket/${id}`);
+    const { data } = await axios.get(
+      `https://orange-snail-tutu.cyclic.app/api/v1/ticket/${id}`
+    );
     console.log(data.ticket);
     dispatch({ type: TICKET_DETAILS_SUCCESS, payload: data.ticket });
   } catch (error) {
@@ -114,7 +124,9 @@ export const deleteTicket = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_TICKET_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/ticket/${id}`);
+    const { data } = await axios.delete(
+      `https://orange-snail-tutu.cyclic.app/api/v1/ticket/${id}`
+    );
 
     dispatch({ type: DELETE_TICKET_SUCCESS, payload: data.success });
   } catch (error) {

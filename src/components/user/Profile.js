@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../loading/Loading";
 import "./profile.css";
 
 const Profile = ({ history }) => {
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated === false) {
-      history.push("/login");
+      navigate("/login");
     }
-  }, [history, isAuthenticated]);
+  }, [isAuthenticated, navigate]);
   return (
     <>
       {loading ? (

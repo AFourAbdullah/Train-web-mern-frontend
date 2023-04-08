@@ -19,7 +19,7 @@ const UpdateProfile = ({ history }) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState(user.avatar.url);
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   const navigate = useNavigate();
   const updateProfileSubmit = (e) => {
@@ -27,7 +27,10 @@ const UpdateProfile = ({ history }) => {
     const myForm = new FormData();
     myForm.set("name", name);
     myForm.set("email", email);
-    myForm.set("avatar", avatar);
+    if (avatar !== user.avatar.url) {
+      myForm.set("avatar", avatar);
+    }
+
     dispatch(updateUser(myForm));
   };
   const updateProfileDataChange = (e) => {
@@ -46,10 +49,11 @@ const UpdateProfile = ({ history }) => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
-      setAvatar(user.avatar.url);
+      setAvatarPreview(user.avatar.url);
+      // console.log("avatr " + avatar);
     }
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     if (isUpdated) {
@@ -60,7 +64,7 @@ const UpdateProfile = ({ history }) => {
         type: UPDATE_PROFILE_RESET,
       });
     }
-  }, [dispatch, error, , isUpdated, user]);
+  }, [dispatch, error, isUpdated, user]);
   return (
     <>
       {loading ? (

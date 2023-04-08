@@ -26,6 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAdminTrains());
     dispatch(getAllUsers());
+    console.log(trains.length);
   }, [dispatch]);
   let totalAmount = 0;
   tickets &&
